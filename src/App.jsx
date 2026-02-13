@@ -143,18 +143,7 @@ function App() {
       <footer className="bg-card border-t border-border mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center sm:text-left">
-              © 2025 Binance BTC/USDT Tracker. Tüm hakları saklıdır.
-            </p>
             <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-              <a href="#" className="hover:text-foreground transition-colors">
-                Gizlilik
-              </a>
-              <span>•</span>
-              <a href="#" className="hover:text-foreground transition-colors">
-                Kullanım Koşulları
-              </a>
-              <span>•</span>
               <a
                 href="https://www.binance.com"
                 target="_blank"

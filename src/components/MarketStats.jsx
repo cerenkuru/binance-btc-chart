@@ -1,8 +1,6 @@
 import { TrendingUp, TrendingDown, BarChart3, DollarSign } from "lucide-react";
 
-/**
- * Piyasa istatistikleri kartı
- */
+/* Piyasa istatistikleri cardı */
 const MarketStats = ({ stats, currentPrice }) => {
   if (!currentPrice || !stats) {
     return (

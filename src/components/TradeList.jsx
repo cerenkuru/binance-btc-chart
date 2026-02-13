@@ -1,9 +1,7 @@
 import { ArrowUpRight, ArrowDownRight, Clock } from "lucide-react";
 import { formatPrice, formatQuantity, formatTime } from "../utils/formatters";
 
-/**
- * Son işlemleri gösteren liste komponenti
- */
+/* Son işlemler */
 const TradeList = ({ recentTrades }) => {
   if (!recentTrades || recentTrades.length === 0) {
     return (

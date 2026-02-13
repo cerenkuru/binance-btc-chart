@@ -25,9 +25,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-/**
- * Canlı fiyat grafiğini gösteren komponent
- */
+/* Canlı fiyat grafiği */
 const PriceChart = ({ priceData, isDarkMode }) => {
   if (!priceData || priceData.length === 0) {
     return (

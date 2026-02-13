@@ -39,10 +39,7 @@ const getCloseErrorMessage = (code) => {
   }
 };
 
-/**
- * Binance WebSocket bağlantısını yöneten custom hook
- * @returns {object} WebSocket state ve verileri
- */
+/* WebSocket bağlantısı */
 const useBinanceWebSocket = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [currentPrice, setCurrentPrice] = useState(null);
@@ -112,7 +109,6 @@ const useBinanceWebSocket = () => {
       const ws = new WebSocket(BINANCE_WS_URL);
 
       ws.onopen = () => {
-        console.log("✅ WebSocket bağlantı başarılı");
         setIsConnected(true);
         setError(null);
         reconnectAttemptsRef.current = 0;
@@ -236,12 +232,12 @@ const useBinanceWebSocket = () => {
             trades24h: prev.trades24h + 1,
           }));
         } catch (err) {
-          console.error("❌ Mesaj parse hatası:", err);
+          console.error("Mesaj parse hatası:", err);
         }
       };
 
       ws.onerror = (event) => {
-        console.error("❌ WebSocket hatası:", event);
+        console.error("WebSocket hatası:", event);
 
         if (errorTimeoutRef.current) {
           clearTimeout(errorTimeoutRef.current);
@@ -261,7 +257,7 @@ const useBinanceWebSocket = () => {
       };
 
       ws.onclose = (event) => {
-        console.log("🔌 WebSocket bağlantı kapandı:", event.code, event.reason);
+        console.log("WebSocket bağlantı kapandı:", event.code, event.reason);
         setIsConnected(false);
         wsRef.current = null;
 
@@ -286,10 +282,6 @@ const useBinanceWebSocket = () => {
 
         if (reconnectAttemptsRef.current < MAX_RECONNECT_ATTEMPTS) {
           reconnectAttemptsRef.current += 1;
-          console.log(
-            `🔄 Yeniden bağlanılıyor... (${reconnectAttemptsRef.current}/${MAX_RECONNECT_ATTEMPTS})`,
-          );
-
           reconnectTimeoutRef.current = setTimeout(() => {
             if (connectRef.current) {
               connectRef.current();
@@ -304,7 +296,7 @@ const useBinanceWebSocket = () => {
 
       wsRef.current = ws;
     } catch (err) {
-      console.error("❌ Bağlantı hatası:", err);
+      console.error("Bağlantı hatası:", err);
 
       if (errorTimeoutRef.current) {
         clearTimeout(errorTimeoutRef.current);

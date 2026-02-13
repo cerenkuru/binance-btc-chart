@@ -5,9 +5,7 @@ import {
   getBgColorClass,
 } from "../utils/formatters";
 
-/**
- * Fiyat bilgilerini gösteren kart komponenti
- */
+/* Fiyat bilgileri */
 const PriceCard = ({ currentPrice, stats }) => {
   if (!currentPrice) {
     return (
