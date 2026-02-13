@@ -81,3 +81,86 @@
 .animate-pulse-red {
   animation: pulse-red 1s ease-in-out;
 }
+
+/* Trade List Animasyonları */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes highlightGreen {
+  0% {
+    background-color: rgba(34, 197, 94, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes highlightRed {
+  0% {
+    background-color: rgba(239, 68, 68, 0.2);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.trade-item {
+  animation: slideInDown 0.3s ease-out;
+}
+
+.trade-item-new-green {
+  animation:
+    slideInDown 0.3s ease-out,
+    highlightGreen 1.5s ease-out;
+}
+
+.trade-item-new-red {
+  animation:
+    slideInDown 0.3s ease-out,
+    highlightRed 1.5s ease-out;
+}
+
+/* Dark mode için highlight animasyonları */
+.dark .trade-item-new-green {
+  animation:
+    slideInDown 0.3s ease-out,
+    highlightGreen 1.5s ease-out;
+}
+
+@keyframes highlightGreenDark {
+  0% {
+    background-color: rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes highlightRedDark {
+  0% {
+    background-color: rgba(239, 68, 68, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.dark .trade-item-new-green {
+  animation:
+    slideInDown 0.3s ease-out,
+    highlightGreenDark 1.5s ease-out;
+}
+
+.dark .trade-item-new-red {
+  animation:
+    slideInDown 0.3s ease-out,
+    highlightRedDark 1.5s ease-out;
+}

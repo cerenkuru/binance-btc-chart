@@ -1,4 +1,3 @@
-import React from "react";
 import {
   XAxis,
   YAxis,
@@ -35,11 +34,11 @@ const CustomTooltip = ({ active, payload }) => {
 const PriceChart = ({ priceData, isDarkMode }) => {
   if (!priceData || priceData.length === 0) {
     return (
-      <div className="bg-card border border-border rounded-lg p-6 shadow-lg h-96">
-        <h3 className="text-xl font-bold text-foreground mb-4">
+      <div className="bg-card border border-border rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-foreground mb-6">
           Canlı Fiyat Grafiği
         </h3>
-        <div className="flex items-center justify-center h-80">
+        <div className="flex items-center justify-center h-96">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
             <p className="text-gray-500 dark:text-gray-400">
@@ -62,7 +61,7 @@ const PriceChart = ({ priceData, isDarkMode }) => {
 
   return (
     <div className="bg-card border border-border rounded-lg p-6 shadow-lg">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-20">
         <h3 className="text-xl font-bold text-foreground">
           Canlı Fiyat Grafiği
         </h3>
@@ -126,7 +125,7 @@ const PriceChart = ({ priceData, isDarkMode }) => {
         </AreaChart>
       </ResponsiveContainer>
 
-      <div className="mt-4 flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+      <div className="mt-6 flex items-center justify-center gap-5 text-sm text-gray-500 dark:text-gray-400">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
           <span>Yükseliş</span>

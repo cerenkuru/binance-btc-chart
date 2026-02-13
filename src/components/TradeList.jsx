@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowUpRight, ArrowDownRight, Clock } from "lucide-react";
 import { formatPrice, formatQuantity, formatTime } from "../utils/formatters";
 
@@ -32,7 +31,7 @@ const TradeList = ({ recentTrades }) => {
         </div>
       </div>
 
-      <div className="space-y-1 overflow-y-auto max-h-[500px] pr-2">
+      <div className="space-y-1 overflow-y-auto max-h-[500px] pr-2 scroll-smooth">
         {/* Başlıklar */}
         <div className="grid grid-cols-4 gap-4 pb-2 border-b border-border text-xs font-semibold text-gray-500 dark:text-gray-400 sticky top-0 bg-card">
           <div>Fiyat (USDT)</div>
@@ -45,16 +44,11 @@ const TradeList = ({ recentTrades }) => {
         {recentTrades.map((trade, index) => {
           const isBuy = trade.isBuy;
           const colorClass = isBuy ? "text-green-500" : "text-red-500";
-          const bgClass = isBuy
-            ? "hover:bg-green-500/5 dark:hover:bg-green-500/10"
-            : "hover:bg-red-500/5 dark:hover:bg-red-500/10";
 
           return (
             <div
-              key={trade.id}
-              className={`grid grid-cols-4 gap-4 py-2 px-2 rounded transition-colors ${bgClass} ${
-                index === 0 ? "bg-opacity-20" : ""
-              }`}
+              key={`${trade.id}-${index}`}
+              className={`grid grid-cols-4 gap-4 py-2 px-2 rounded transition-all duration-200`}
             >
               {/* Fiyat */}
               <div

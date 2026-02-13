@@ -4,6 +4,7 @@ import useBinanceWebSocket from "./hooks/useBinanceWebSocket";
 import PriceCard from "./components/PriceCard";
 import PriceChart from "./components/PriceChart";
 import TradeList from "./components/TradeList";
+import MarketStats from "./components/MarketStats";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -103,7 +104,7 @@ function App() {
 
               {/* GitHub Link */}
               <a
-                href="https://github.com"
+                href="https://github.com/cerenkuru/binance-btc-chart"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -130,14 +131,15 @@ function App() {
         )}
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Sol Kolon - Fiyat Kartı */}
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Sol Kolon - Fiyat Kartı ve İstatistikler */}
+          <div className="lg:col-span-4 space-y-6">
             <PriceCard currentPrice={currentPrice} stats={stats} />
+            <MarketStats stats={stats} currentPrice={currentPrice} />
           </div>
 
-          {/* Orta Kolon - Grafik */}
-          <div className="lg:col-span-2">
+          {/* Sağ Kolon - Grafik */}
+          <div className="lg:col-span-8">
             <PriceChart priceData={priceData} isDarkMode={isDarkMode} />
           </div>
         </div>
