@@ -14,14 +14,12 @@ const MarketStats = ({ stats, currentPrice }) => {
     );
   }
 
-  // 24h değişim hesapla
   const priceChange24h = currentPrice.price - stats.low24h;
   const priceChange24hPercent = ((priceChange24h / stats.low24h) * 100).toFixed(
     2,
   );
   const isPositive = priceChange24h >= 0;
 
-  // Spread hesapla (High - Low)
   const spread = stats.high24h - stats.low24h;
   const spreadPercent = ((spread / stats.low24h) * 100).toFixed(2);
 
@@ -41,9 +39,7 @@ const MarketStats = ({ stats, currentPrice }) => {
         </div>
       </div>
 
-      {/* 2x2 Grid */}
       <div className="grid grid-cols-2 gap-3">
-        {/* 24h Değişim */}
         <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
           <div className="flex items-center gap-1 mb-2">
             {isPositive ? (
@@ -66,7 +62,6 @@ const MarketStats = ({ stats, currentPrice }) => {
           </p>
         </div>
 
-        {/* Spread */}
         <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
           <div className="flex items-center gap-1 mb-2">
             <BarChart3 className="w-3 h-3 text-blue-500" />
@@ -82,7 +77,6 @@ const MarketStats = ({ stats, currentPrice }) => {
           </p>
         </div>
 
-        {/* Ortalama Fiyat */}
         <div className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
           <div className="flex items-center gap-1 mb-2">
             <DollarSign className="w-3 h-3 text-yellow-500" />
@@ -96,7 +90,6 @@ const MarketStats = ({ stats, currentPrice }) => {
           <p className="text-xs text-gray-500 dark:text-gray-400">H+L / 2</p>
         </div>
 
-        {/* Volatilite */}
         <div className="p-3 bg-gradient-to-br from-purple-500/10 to-blue-500/10 dark:from-purple-500/20 dark:to-blue-500/20 rounded-lg border border-purple-200 dark:border-purple-800">
           <div className="flex items-center gap-1 mb-2">
             <div className="w-3 h-3 rounded-full bg-purple-500"></div>

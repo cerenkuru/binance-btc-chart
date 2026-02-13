@@ -8,9 +8,6 @@ import {
   AreaChart,
 } from "recharts";
 
-/**
- * Özel Tooltip komponenti
- */
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
@@ -50,12 +47,10 @@ const PriceChart = ({ priceData, isDarkMode }) => {
     );
   }
 
-  // İlk ve son fiyatı karşılaştır
   const firstPrice = priceData[0]?.price || 0;
   const lastPrice = priceData[priceData.length - 1]?.price || 0;
   const isPositive = lastPrice >= firstPrice;
 
-  // Gradient renkleri
   const strokeColor = isPositive ? "#10b981" : "#ef4444";
   const fillColor = isPositive ? "url(#colorGreen)" : "url(#colorRed)";
 

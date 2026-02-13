@@ -8,9 +8,6 @@ const CHART_UPDATE_INTERVAL = 2000;
 const PRICE_UPDATE_INTERVAL = 500;
 const TRADE_UPDATE_INTERVAL = 1000;
 
-/**
- * WebSocket close kodlarına göre hata mesajı döndürür
- */
 const getCloseErrorMessage = (code) => {
   switch (code) {
     case 1002:
@@ -65,7 +62,6 @@ const useBinanceWebSocket = () => {
   const errorTimeoutRef = useRef(null);
   const previousPriceRef = useRef(null);
 
-  // Buffer sistemi için ref'ler
   const priceBufferRef = useRef([]);
   const tradeBufferRef = useRef([]);
   const chartUpdateIntervalRef = useRef(null);
@@ -73,7 +69,7 @@ const useBinanceWebSocket = () => {
   const tradeUpdateIntervalRef = useRef(null);
   const latestPriceRef = useRef(null);
   const connectRef = useRef(null);
-  const priceHistoryRef = useRef([]); // Son 1 dakikalık fiyatlar
+  const priceHistoryRef = useRef([]);
 
   // Bağlantıyı kapat
   const disconnect = useCallback(() => {
@@ -121,16 +117,13 @@ const useBinanceWebSocket = () => {
         setError(null);
         reconnectAttemptsRef.current = 0;
 
-        // Hata timeout'unu iptal et (bağlantı kuruldu)
         if (errorTimeoutRef.current) {
           clearTimeout(errorTimeoutRef.current);
           errorTimeoutRef.current = null;
         }
 
-        // Grafik güncelleme interval'ını başlat (her 2 saniyede bir)
         chartUpdateIntervalRef.current = setInterval(() => {
           if (priceBufferRef.current.length > 0) {
-            // Buffer'daki fiyatların ortalamasını al
             const avgPrice =
               priceBufferRef.current.reduce((sum, p) => sum + p.price, 0) /
               priceBufferRef.current.length;
@@ -162,22 +155,18 @@ const useBinanceWebSocket = () => {
           }
         }, CHART_UPDATE_INTERVAL);
 
-        // Fiyat güncelleme interval'ını başlat (daha sık ama smooth)
         priceUpdateIntervalRef.current = setInterval(() => {
           if (latestPriceRef.current) {
             const price = latestPriceRef.current.price;
             const timestamp = latestPriceRef.current.timestamp;
 
-            // Fiyat geçmişine ekle
             priceHistoryRef.current.push({ price, timestamp });
 
-            // 1 dakikadan eski verileri temizle
             const oneMinuteAgo = timestamp - 60000;
             priceHistoryRef.current = priceHistoryRef.current.filter(
               (p) => p.timestamp > oneMinuteAgo,
             );
 
-            // 1 dakika önceki fiyatı bul
             let priceOneMinuteAgo = price;
             if (priceHistoryRef.current.length > 0) {
               priceOneMinuteAgo = priceHistoryRef.current[0].price;
@@ -201,20 +190,16 @@ const useBinanceWebSocket = () => {
           }
         }, PRICE_UPDATE_INTERVAL);
 
-        // Trade güncelleme interval'ını başlat (1 saniyede bir)
         tradeUpdateIntervalRef.current = setInterval(() => {
           if (tradeBufferRef.current.length > 0) {
-            // Buffer'daki trade'leri al ve state'e ekle
             const newTrades = [...tradeBufferRef.current];
 
             setRecentTrades((prev) => {
-              // En fazla 3 yeni trade ekle (daha smooth)
               const tradesToAdd = newTrades.slice(0, 3);
               const updated = [...tradesToAdd, ...prev].slice(0, 20);
               return updated;
             });
 
-            // Buffer'ı temizle
             tradeBufferRef.current = [];
           }
         }, TRADE_UPDATE_INTERVAL);
@@ -229,13 +214,10 @@ const useBinanceWebSocket = () => {
           const timestamp = trade.T;
           const isBuyerMaker = trade.m;
 
-          // En son fiyatı sakla (interval'da kullanılacak)
           latestPriceRef.current = { price, timestamp };
 
-          // Fiyatı buffer'a ekle (grafik için)
           priceBufferRef.current.push({ price, timestamp });
 
-          // Trade'i buffer'a ekle (interval'da eklenecek)
           const newTrade = {
             id: trade.t,
             price,
@@ -247,7 +229,6 @@ const useBinanceWebSocket = () => {
 
           tradeBufferRef.current.push(newTrade);
 
-          // 24 saat istatistikleri
           setStats((prev) => ({
             high24h: Math.max(prev.high24h, price),
             low24h: Math.min(prev.low24h, price),
@@ -262,15 +243,11 @@ const useBinanceWebSocket = () => {
       ws.onerror = (event) => {
         console.error("❌ WebSocket hatası:", event);
 
-        // Önceki hata timeout'unu temizle
         if (errorTimeoutRef.current) {
           clearTimeout(errorTimeoutRef.current);
         }
 
-        // Hata mesajını 2 saniye gecikmeyle göster
-        // Eğer bu süre içinde bağlantı kurulursa onopen'da iptal edilecek
         errorTimeoutRef.current = setTimeout(() => {
-          // Bağlantı durumuna göre hata mesajı
           if (ws.readyState === WebSocket.CLOSED) {
             setError("WebSocket bağlantısı kapatıldı");
           } else if (ws.readyState === WebSocket.CLOSING) {
@@ -288,7 +265,6 @@ const useBinanceWebSocket = () => {
         setIsConnected(false);
         wsRef.current = null;
 
-        // Interval'ları ve timeout'ları temizle
         if (chartUpdateIntervalRef.current) {
           clearInterval(chartUpdateIntervalRef.current);
         }
@@ -303,13 +279,11 @@ const useBinanceWebSocket = () => {
           errorTimeoutRef.current = null;
         }
 
-        // Close kod kontrolü - Normal kapanma değilse hata göster
         if (event.code !== 1000 && event.code !== 1001) {
           const errorMessage = event.reason || getCloseErrorMessage(event.code);
           setError(errorMessage);
         }
 
-        // Otomatik yeniden bağlanma
         if (reconnectAttemptsRef.current < MAX_RECONNECT_ATTEMPTS) {
           reconnectAttemptsRef.current += 1;
           console.log(
@@ -332,24 +306,20 @@ const useBinanceWebSocket = () => {
     } catch (err) {
       console.error("❌ Bağlantı hatası:", err);
 
-      // Önceki hata timeout'unu temizle
       if (errorTimeoutRef.current) {
         clearTimeout(errorTimeoutRef.current);
       }
 
-      // Hata mesajını 2 saniye gecikmeyle göster
       errorTimeoutRef.current = setTimeout(() => {
         setError(err.message);
       }, 2000);
     }
   }, []);
 
-  // Connect fonksiyonunu ref'e sakla
   useEffect(() => {
     connectRef.current = connect;
   }, [connect]);
 
-  // Manuel yeniden bağlanma
   const reconnect = useCallback(() => {
     disconnect();
     reconnectAttemptsRef.current = 0;
@@ -357,7 +327,6 @@ const useBinanceWebSocket = () => {
     connect();
   }, [connect, disconnect]);
 
-  // Component mount/unmount
   useEffect(() => {
     connect();
 

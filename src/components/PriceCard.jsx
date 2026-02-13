@@ -54,7 +54,6 @@ const PriceCard = ({ currentPrice, stats }) => {
       </div>
 
       <div className="space-y-3">
-        {/* Güncel Fiyat */}
         <div
           className={`${currentPrice.isUp ? "animate-pulse-green" : currentPrice.isDown ? "animate-pulse-red" : ""}`}
         >
@@ -66,7 +65,6 @@ const PriceCard = ({ currentPrice, stats }) => {
           </p>
         </div>
 
-        {/* İstatistikler Grid */}
         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border">
           <div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">

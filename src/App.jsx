@@ -22,7 +22,6 @@ function App() {
     reconnect,
   } = useBinanceWebSocket();
 
-  // Dark mode toggle
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -38,11 +37,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
-      {/* Header */}
       <header className="bg-card border-b border-border shadow-sm sticky top-0 z-50 backdrop-blur-sm bg-opacity-90">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo ve Başlık */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center shadow-lg">
                 <span className="text-white font-bold text-xl">₿</span>
@@ -57,9 +54,7 @@ function App() {
               </div>
             </div>
 
-            {/* Sağ Kontroller */}
             <div className="flex items-center gap-3">
-              {/* Bağlantı Durumu */}
               <div className="flex items-center gap-2">
                 {isConnected ? (
                   <>
@@ -89,7 +84,6 @@ function App() {
                 )}
               </div>
 
-              {/* Dark Mode Toggle */}
               <button
                 onClick={toggleDarkMode}
                 className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -102,7 +96,6 @@ function App() {
                 )}
               </button>
 
-              {/* GitHub Link */}
               <a
                 href="https://github.com/cerenkuru/binance-btc-chart"
                 target="_blank"
@@ -116,9 +109,7 @@ function App() {
           </div>
         </div>
       </header>
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-500/10 dark:bg-red-500/20 border border-red-500 rounded-lg">
             <div className="flex items-center gap-2">
@@ -130,7 +121,6 @@ function App() {
           </div>
         )}
 
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Sol Kolon - Fiyat Kartı ve İstatistikler */}
           <div className="lg:col-span-4 space-y-6">
@@ -144,13 +134,12 @@ function App() {
           </div>
         </div>
 
-        {/* İşlem Listesi - Full Width */}
+        {/* İşlem Listesi */}
         <div className="mt-6">
           <TradeList recentTrades={recentTrades} />
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-card border-t border-border mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
